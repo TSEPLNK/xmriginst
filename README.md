@@ -3,7 +3,7 @@ Some parts were created w/ chatgpt (im kinda newbie in python).
 So if you know how to simplify it, here you go!
 
 HOW TO USE
-Firstly, open the cript by executing "python xmriginst.py"
+Firstly, open the script by executing "python xmriginst.py"
 Then, install depencies (also includes updating and upgrading your system).
 Write your Monero wallet.
 Then, after everything is fine go to 'build' by executing "cd ~/xmrig/build". Now run "./xmrig".
