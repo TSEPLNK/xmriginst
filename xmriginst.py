@@ -1,0 +1,110 @@
+#Simple script to install and mine monero thru XMRig on Arch Linux. Some parts of the code were created by chatgpt
+
+import time
+import json
+from time import sleep
+import os
+import subprocess
+from contextlib import chdir
+import sys
+
+def lang():
+	print("Choose an language")
+
+def ask_c():
+	answer = input("Continue? (y/n): ").strip().lower()
+	if answer not in ("y", ""):
+		print ("Stopped by user")
+		exit(0)
+
+def depencies():
+	answer = input ("Do you want to install Depencies? (y/n): ").strip().lower()
+	if answer in ("y", ""):
+		print ("Installing depencies, user input")
+		print ("Please, type your system password if it's needed. If you don't want to continue, press Ctrl + C")
+		subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
+	elif answer == "n":
+		print ("Skipping installing depencies, user input")
+	else:
+		print ("Skipping installing depencies, user input")
+
+usr = os.path.expanduser("~")
+xmrig = os.path.expanduser("xmrig")
+build = os.path.expanduser("build")
+config_path = os.path.expanduser("~/xmrig/build/config.json")
+
+for i in range(3, 0, -1): 
+    for symbol in f"{i}...": 
+        sys.stdout.write(symbol)
+        sys.stdout.flush()
+        time.sleep(0.2)
+    time.sleep(0.5)
+
+print()
+
+depencies()
+
+#subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
+
+os.chdir(usr)
+print("Current directory:", os.getcwd(),"NOTE! IF ITS NOT /home/your_username BETTER DO NOT CONTIUE!") 
+ask_c()
+
+
+if not os.path.exists(xmrig):
+    print("Cloning XMRig repository...")
+    subprocess.call(["git", "clone", "https://github.com/xmrig/xmrig.git"])
+else:
+    print("XMRig directory already exists. Skipping cloning.")
+
+#print ("Miner source code was succesfully downloaded into xmrig folder!")
+for i in range(3, 0, -1):              
+    for symbol in f"{i}...":  
+        sys.stdout.write(symbol)       
+        sys.stdout.flush()
+        time.sleep(0.2)
+    time.sleep(0.5) 
+print()  
+
+
+os.chdir(xmrig)
+subprocess.call(["mkdir", "build"])
+
+os.chdir(build)
+print(f"Current directory: {os.getcwd()} NOTE! IF ITS NOT /home/username/xmrig/build BETTER DO NOT CONTINUE!")
+ask_c()
+
+wallet_address = input("Write your Monero wallet address: ") #Wallet
+
+if os.path.exists(config_path):
+    with open(config_path, "r") as file:
+        config = json.load(file)
+else:
+    config = {}
+
+config["pools"] = [{
+    "url": "pool.supportxmr.com:443", 
+    "user": wallet_address,
+    "tls": True
+}]
+
+
+
+# Saving the config file
+with open(config_path, "w") as file:
+    json.dump(config, file, indent=4)
+
+
+subprocess.call (["cmake", ".."])
+subprocess.call(["make", f"-j{os.cpu_count()}"])
+
+print ("Succesfully installed XMRig! Now, type 'cd ~/xmrig/build', and then './xmrig'!")
+print ("Closing the program")
+
+for i in range(3, 0, -1):
+    for symbol in f"{i}...":
+        sys.stdout.write(symbol)
+        sys.stdout.flush()
+        time.sleep(0.2)
+    time.sleep(0.5)
+print ()
