@@ -14,14 +14,32 @@ def ask_c():
 		print ("Stopped by user")
 		exit(0)
 
+def distro():
+	answer = input ("1. Arch; 2. Debian; 3. Fedora/RedHat- based distro with DNF; 4. Windows: ")
+	if answer in ("1"):
+		print ("Installing depencies for Arch Linux")
+		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
+		subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
+	elif answer in ("2"):
+		print ("Installing depencies for Debian")
+		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
+		subprocess.call(["sudo","apt", "update", "&&", "sudo", "apt", "install", "git", "build-essential", "cmake", "libuv1-dev", "uuid-dev", "libssl-dev", "--noconfirm"])
+	elif answer in ("3"):
+		print ("Installing depencies for RPM- based distro")
+		print ("Please, type your root passsword if it's needed. If you don't want to continue, press Ctrl + C")
+		subprocess.call(["sudo", "dnf", "system-upgrade", "&&", "sudo", "dnf", "install", "git", "make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--noconfirm"])
+	elif answer in ("4"):
+		print ("Not supported yet")
+		exit(0)
+	else:
+		print ("Please choose existing variant.")
+		exit(0)
+
 def depencies():
 	answer = input ("Do you want to install Depencies? (y/n): ").strip().lower()
 	if answer in ("y", ""):
-		print ("Installing depencies, user input")
-		print ("Please, type your system password if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
-	elif answer == "n":
-		print ("Skipping installing depencies, user input")
+		print ("Choose your operating system")
+		distro()
 	else:
 		print ("Skipping installing depencies, user input")
 
@@ -51,7 +69,7 @@ if not os.path.exists(xmrig):
     subprocess.call(["git", "clone", "https://github.com/xmrig/xmrig.git"])
 else:
     print("XMRig directory already exists. Skipping cloning.")
-	
+
 for i in range(3, 0, -1):              
     for symbol in f"{i}...":  
         sys.stdout.write(symbol)       
