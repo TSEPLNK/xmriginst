@@ -8,9 +8,6 @@ import subprocess
 from contextlib import chdir
 import sys
 
-def lang():
-	print("Choose an language")
-
 def ask_c():
 	answer = input("Continue? (y/n): ").strip().lower()
 	if answer not in ("y", ""):
@@ -44,8 +41,6 @@ print()
 
 depencies()
 
-#subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
-
 os.chdir(usr)
 print("Current directory:", os.getcwd(),"NOTE! IF ITS NOT /home/your_username BETTER DO NOT CONTIUE!") 
 ask_c()
@@ -56,8 +51,7 @@ if not os.path.exists(xmrig):
     subprocess.call(["git", "clone", "https://github.com/xmrig/xmrig.git"])
 else:
     print("XMRig directory already exists. Skipping cloning.")
-
-#print ("Miner source code was succesfully downloaded into xmrig folder!")
+	
 for i in range(3, 0, -1):              
     for symbol in f"{i}...":  
         sys.stdout.write(symbol)       
