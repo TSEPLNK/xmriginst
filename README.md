@@ -11,7 +11,7 @@ Once everything is set up, navigate to the build directory:
 cd ~/xmrig/build
 Run the miner:
 sudo ./xmrig
-If you want to change the mining pool, open the config.json file and update the pool address.
+If you want to change the mining pool, open the config.json file and change the pool address.
 Congrats! You just installed XMRig and ready to mine Monero!
 
 
