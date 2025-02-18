@@ -1,4 +1,4 @@
-#Simple script to install and mine monero thru XMRig on Arch Linux. Some parts of the code were created by chatgpt
+#Simple script to install and mine monero thru XMRig on Linux. Some parts of the code were created by chatgpt
 
 import time
 import json
@@ -7,41 +7,81 @@ import os
 import subprocess
 from contextlib import chdir
 import sys
+import platform
+
 
 def ask_c():
 	answer = input("Continue? (y/n): ").strip().lower()
 	if answer not in ("y", ""):
-		print ("Stopped by user")
+		print ("\033[91mStopped by user!\033[0m")
 		exit(0)
 
+def choose():
+	answer = input ("1. supportxmr.com; 2. xmrpool.eu; 3. xmrfast.com; 4. monerohash.com; 5. herominers.com: ")
+	if answer == ("1"):
+		print("Using supportxmr")
+		print("\033[31m\033[44mAfter installation, you can still change your pool in config.json file.\033[0m")
+		pool = "pool.supportxmr.com:443"
+	elif answer == ("2"):
+		print("Using xmrpool.eu")
+		print("After installation, you can still change your pool in config.json file.")
+		pool = "xmrpool.eu:9999"
+	elif answer == ("3"):
+		print("Using xmrfast")
+		print("After installation, you can still change your pool in config.json file.")
+		pool = "pool.xmrfast.com:9000" 
+	elif answer == ("4"):
+		print ("Using monerohash")
+		print("After installation, y ou can still change your pool in config.json file.")
+		pool = "monerohash.com:9999"
+	elif answer == ("5"):
+		print ("Using herominers's (Central European server)")
+		print("After installation, you can still change your pool in config.json file.")
+		pool = "monero.herominers.com:10191" 
+	else:
+		print("Invalid choice. Please, choose existing variant")
+		return None
+		exit(0)
+	return pool 
+
 def distro():
-	answer = input ("1. Arch; 2. Debian; 3. Fedora/RedHat- based distro with DNF; 4. Windows: ")
-	if answer in ("1"):
+	answer = input ("1. Arch; 2. Debian; 3. RedHat- based distro with DNF; 4. Windows: ")
+	if answer in ("1", ""):
 		print ("Installing depencies for Arch Linux")
 		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
 		subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
 	elif answer in ("2"):
 		print ("Installing depencies for Debian")
 		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo","apt", "update", "&&", "sudo", "apt", "install", "git", "build-essential", "cmake", "libuv1-dev", "uuid-dev", "libssl-dev", "--noconfirm"])
+		subprocess.call(["sudo", "apt", "upgrade"])
+		subprocess.call(["sudo", "apt", "install", "git", "build-essential", "cmake", "libuv1-dev", "uuid-dev", "libssl-dev"])
 	elif answer in ("3"):
 		print ("Installing depencies for RPM- based distro")
 		print ("Please, type your root passsword if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo", "dnf", "system-upgrade", "&&", "sudo", "dnf", "install", "git", "make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--noconfirm"])
+		subprocess.call(["sudo", "dnf", "system-upgrade"])
+		subprocess.call(["sudo", "dnf", "install", "git", "make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel"])
 	elif answer in ("4"):
-		print ("Not supported yet")
+		print ("Installing depencies for Windows")
+		#subprocess.call(["winget", "install", "Kitware.CMake"])
+		#subprocess.call(["winget", "install", "Git.Git"])
+		#subprocess.call(["winget", "install", "Microsoft.VisualStudio.2022.BuildTools", "--override", "--wait", "--passive", "--norestart", "--add", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64"])
+		#subprocess.call(["Microsoft.VisualStudio.2022.Workload.VCTools"])
+		sleep(1.5)
+		print("Windows is still in dev, now its not supported.")
 		exit(0)
 	else:
-		print ("Please choose existing variant.")
+		print ("'\033[31mPlease choose existing variant.\033[0m")
 		exit(0)
+
+
 
 def depencies():
 	answer = input ("Do you want to install Depencies? (y/n): ").strip().lower()
 	if answer in ("y", ""):
-		print ("Choose your operating system")
+		print("Choose your operating system")
 		distro()
 	else:
-		print ("Skipping installing depencies, user input")
+		print("Skipping installing depencies, user input")
 
 usr = os.path.expanduser("~")
 xmrig = os.path.expanduser("xmrig")
@@ -60,7 +100,7 @@ print()
 depencies()
 
 os.chdir(usr)
-print("Current directory:", os.getcwd(),"NOTE! IF ITS NOT /home/your_username BETTER DO NOT CONTIUE!") 
+print(f"Current directory:", os.getcwd()) 
 ask_c()
 
 
@@ -68,7 +108,8 @@ if not os.path.exists(xmrig):
     print("Cloning XMRig repository...")
     subprocess.call(["git", "clone", "https://github.com/xmrig/xmrig.git"])
 else:
-    print("XMRig directory already exists. Skipping cloning.")
+	print("\033[31mXMRig directory already exists. Please, delete it.\033[0m")
+	exit(0)
 
 for i in range(3, 0, -1):              
     for symbol in f"{i}...":  
@@ -83,19 +124,17 @@ os.chdir(xmrig)
 subprocess.call(["mkdir", "build"])
 
 os.chdir(build)
-print(f"Current directory: {os.getcwd()} NOTE! IF ITS NOT /home/username/xmrig/build BETTER DO NOT CONTINUE!")
+print(f"Current directory:", os.getcwd())
 ask_c()
 
-wallet_address = input("Write your Monero wallet address: ") #Wallet
+wallet_address = input("\033[44mWrite your Monero wallet address:\033[0m ") 
+print("Choose your pool.")
+pool = choose()
 
-if os.path.exists(config_path):
-    with open(config_path, "r") as file:
-        config = json.load(file)
-else:
-    config = {}
+config = {}
 
 config["pools"] = [{
-    "url": "pool.supportxmr.com:443", 
+    "url": pool, 
     "user": wallet_address,
     "tls": True
 }]
@@ -110,8 +149,8 @@ with open(config_path, "w") as file:
 subprocess.call (["cmake", ".."])
 subprocess.call(["make", f"-j{os.cpu_count()}"])
 
-print ("Succesfully installed XMRig! Now, type 'cd ~/xmrig/build', and then './xmrig'!")
-print ("Closing the program")
+print("\033[44mSuccesfully installed XMRig! Now, type 'cd ~/xmrig/build', and then 'sudo ./xmrig'!\033[0m")
+print("Closing program.")
 
 for i in range(3, 0, -1):
     for symbol in f"{i}...":
@@ -120,3 +159,7 @@ for i in range(3, 0, -1):
         time.sleep(0.2)
     time.sleep(0.5)
 print ()
+
+
+
+#DEV THINGS
