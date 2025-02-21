@@ -49,25 +49,19 @@ def distro():
 	if answer in ("1", ""):
 		print ("Installing depencies for Arch Linux")
 		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo", "pacman", "-Syu", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
+		subprocess.call(["sudo", "pacman", "-Syj", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
 	elif answer in ("2"):
 		print ("Installing depencies for Debian")
 		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo", "apt", "upgrade"])
+		subprocess.call(["sudo", "apt", "update"])
 		subprocess.call(["sudo", "apt", "install", "git", "build-essential", "cmake", "libuv1-dev", "uuid-dev", "libssl-dev"])
 	elif answer in ("3"):
 		print ("Installing depencies for RPM- based distro")
 		print ("Please, type your root passsword if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo", "dnf", "system-upgrade"])
-		subprocess.call(["sudo", "dnf", "install", "git", "make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel"])
+		subprocess.call(["sudo", "dnf", "update"])
+		subprocess.call(["sudo", "dnf", "install", "-y", "git"," make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--skip-unavailable"])
 	elif answer in ("4"):
-		print ("Installing depencies for Windows")
-		#subprocess.call(["winget", "install", "Kitware.CMake"])
-		#subprocess.call(["winget", "install", "Git.Git"])
-		#subprocess.call(["winget", "install", "Microsoft.VisualStudio.2022.BuildTools", "--override", "--wait", "--passive", "--norestart", "--add", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64"])
-		#subprocess.call(["Microsoft.VisualStudio.2022.Workload.VCTools"])
-		sleep(1.5)
-		print("Windows is still in dev, now its not supported.")
+		print("Windows is still in dev, unfortunately, its not supported yet and i don't know how to make it work.")
 		exit(0)
 	else:
 		print ("'\033[31mPlease choose existing variant.\033[0m")
