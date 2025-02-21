@@ -49,7 +49,7 @@ def distro():
 	if answer in ("1", ""):
 		print ("Installing depencies for Arch Linux")
 		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
-		subprocess.call(["sudo", "pacman", "-Syj", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
+		subprocess.call(["sudo", "pacman", "-Sy", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
 	elif answer in ("2"):
 		print ("Installing depencies for Debian")
 		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
