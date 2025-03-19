@@ -23,7 +23,7 @@ def ask_c():
 	answer = input("Continue? (y/n): ").strip().lower()
 	if answer not in ("y", ""):
 		print ("\033[91mStopped by user!\033[0m")
-		exit(0)
+		sys.exit(0)
 
 def choose():
 	answer = input ("1. supportxmr.com; 2. xmrpool.eu; 3. xmrfast.com; 4. monerohash.com; 5. herominers.com: ")
@@ -48,9 +48,9 @@ def choose():
 		print("After installation, you can still change your pool in config.json file.")
 		pool = "monero.herominers.com:10191" 
 	else:
-		print("Invalid choice. Please, choose existing variant")
-		return None
-	return pool 
+		print("Invalid choice. Please, choose existing variant. Also, delete the xmrig folder in C:Users/yourusername/")
+		sys.exit(0)
+	return pool
 
 def dxmrig():
     url = "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
@@ -93,9 +93,13 @@ threetwoone()
 
 os.chdir(usr)
 print(f"Current directory:", os.getcwd()) 
-
+ 
 ask_c()
-dxmrig()
+if not os.path.exists(xmrig):
+	dxmrig()
+else:
+	print("XMRig directory already exists. Please, delete it.")
+	sys.exit(0)
 threetwoone()
 os.chdir(xmrig)
 
