@@ -5,7 +5,6 @@ import json
 from time import sleep
 import os
 import subprocess
-from contextlib import chdir
 import sys
 import platform
 
@@ -22,6 +21,9 @@ def ask_c():
 		print ("\033[91mStopped by user!\033[0m")
 		exit(0)
 
+def distro_print():
+	print ("Please, write your root password if it's needed. If you don't want to continue, press Ctrl + C")
+
 def choose():
 	answer = input ("1. supportxmr.com; 2. xmrpool.eu; 3. xmrfast.com; 4. monerohash.com; 5. herominers.com: ")
 	if answer == ("1"):
@@ -30,7 +32,7 @@ def choose():
 		pool = "pool.supportxmr.com:443"
 	elif answer == ("2"):
 		print("Using xmrpool.eu")
-		print("After installation, you can still change your pool in config.json file.")
+		print("After installation, you can still change your pool in config.json file."
 		pool = "xmrpool.eu:9999"
 	elif answer == ("3"):
 		print("Using xmrfast")
@@ -53,16 +55,16 @@ def distro():
 	answer = input ("1. Arch; 2. Debian; 3. RedHat- based distro with DNF: ")
 	if answer in ("1", ""):
 		print ("Installing depencies for Arch Linux")
-		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
+  		distro_print()
 		subprocess.call(["sudo", "pacman", "-Sy", "cmake", "make", "gcc", "git", "hwloc", "libuv", "openssl", "--noconfirm"])
 	elif answer in ("2"):
 		print ("Installing depencies for Debian")
-		print ("Please, type your root password if it's needed. If you don't want to continue, press Ctrl + C")
+		distro_print()
 		subprocess.call(["sudo", "apt", "update"])
 		subprocess.call(["sudo", "apt", "install", "git", "build-essential", "cmake", "libuv1-dev", "uuid-dev", "libssl-dev"])
 	elif answer in ("3"):
 		print ("Installing depencies for RPM- based distro")
-		print ("Please, type your root passsword if it's needed. If you don't want to continue, press Ctrl + C")
+		distro_print()
 		subprocess.call(["sudo", "dnf", "update"])
 		subprocess.call(["sudo", "dnf", "install", "-y", "git"," make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--skip-unavailable"])
 	else:
