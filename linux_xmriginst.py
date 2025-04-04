@@ -107,10 +107,13 @@ config_path = os.path.expanduser("~/xmrig/build/config.json")
 threetwoone()
 
 update = input("1. Install XMRig; 2. Update already existing config (~/xmrig/build): ")
-if update == ("1"):
+if update in "1" or "":
     pass
-if update == ("2"):
+if update in "2":
     config()
+    sys.exit(0)
+else:
+    print ("Please, choose existing variant.")
     sys.exit(0)
 
 print(f"Current directory:", os.getcwd(), "NOTE!")
