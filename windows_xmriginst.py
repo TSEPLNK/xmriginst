@@ -118,9 +118,9 @@ config_path = os.path.join(xmrig, "config.json")
 threetwoone()
 
 update = input("1. Install XMRig; 2. Update already existing config (YourUsername/xmrig/): ")
-if update == "1" or "":
+if update in "1" or "":
     pass
-if update == "2":
+if update in "2":
     config()
     sys.exit(0)
 else:
