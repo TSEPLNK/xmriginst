@@ -5,7 +5,6 @@ import json
 from time import sleep
 import os
 import subprocess
-from contextlib import chdir
 import sys
 import platform
 
@@ -20,13 +19,14 @@ def ask_c():
     answer = input("Continue? (y/n): ").strip().lower()
     if answer not in ("y", ""):
         print ("\033[91mStopped by user!\033[0m")
-        exit(0)
+        sys.exit(0)
 
 def config():
     config_path = os.path.expanduser("~/xmrig/build/config.json")
     print("Updating the config")
     pool = choose()
     wallet_address=input("Enter your Monero Wallet address: ")
+    print()
     config = {}
     config["pools"] = [{
     "url": pool,
@@ -89,7 +89,7 @@ def distro():
         subprocess.call(["sudo", "dnf", "install", "-y", "git"," make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--skip-unavailable"])
     else:
         print ("'\033[31mPlease choose existing variant.\033[0m")
-        exit(0)
+        sys.exit(0)
 
 def depencies():
     answer = input ("Do you want to install Depencies? (y/n): ").strip().lower()
@@ -109,18 +109,18 @@ threetwoone()
 update = input("1. Install XMRig; 2. Update already existing config (~/xmrig/build): ")
 if update in "1" or "":
     pass
-if update in "2":
-    config()
-    sys.exit(0)
+elif update in "2":
+    if os.path.exists(build):
+        config()
+        sys.exit(0)
+    else:
+        print("XMRig directory doesn't exist. Please, install it.")
+        sys.exit(0)
 else:
-    print ("Please, choose existing variant.")
+    print("Choose existing variant.")
     sys.exit(0)
 
-print(f"Current directory:", os.getcwd(), "NOTE!")
-
-
-print()
-
+print(f"Current directory:", os.getcwd())
 depencies()
 
 os.chdir(usr)
@@ -133,7 +133,7 @@ if not os.path.exists(xmrig):
     subprocess.call(["git", "clone", "https://github.com/xmrig/xmrig.git"])
 else:
     print("\033[31mXMRig directory already exists. Please, delete it.\033[0m")
-    exit(0)
+    sys.exit(0)
 
 threetwoone()
 
@@ -142,7 +142,7 @@ os.chdir(xmrig)
 subprocess.call(["mkdir", "build"])
 
 os.chdir(build)
-print(f"Current directory:", os.getcwd(), "NOTE!")
+print(f"Current directory:", os.getcwd())
 ask_c()
 
 config()

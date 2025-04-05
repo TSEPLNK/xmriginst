@@ -27,6 +27,7 @@ def config():
         print("Updating the config")
         pool = choose()
         wallet_address=input("Enter your Monero Wallet address: ")
+        print()
         config = {}
         config["pools"] = [{
         "url": pool,
@@ -35,9 +36,6 @@ def config():
         }]
         with open(config_path, "w") as file:
             json.dump(config, file, indent=4)
-    else:
-        print("XMRig directory doesn't exists. Please, install XMRig to continue.")
-
 
 def ask_c():
     answer = input("Continue? (y/n): ").strip().lower()
@@ -120,9 +118,13 @@ threetwoone()
 update = input("1. Install XMRig; 2. Update already existing config (YourUsername/xmrig/): ")
 if update in "1" or "":
     pass
-if update in "2":
-    config()
-    sys.exit(0)
+elif update in "2":
+    if os.path.exists(xmrig):
+        config()
+        sys.exit(0)
+    else:
+        print ("XMRig directory doesn't exist. Please, install it")
+        sys.exit(0)
 else:
     print ("Please, choose existing variant.")
     sys.exit(0)
