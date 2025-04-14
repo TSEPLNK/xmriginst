@@ -23,19 +23,18 @@ def threetwoone():
 
 def config():
     config_path = os.path.expanduser("~/xmrig/config.json")
-    if os.path.exists(xmrig):
-        print("Updating the config")
-        pool = choose()
-        wallet_address=input("Enter your Monero Wallet address: ")
-        print()
-        config = {}
-        config["pools"] = [{
-        "url": pool,
-        "user": wallet_address,
-        "tls": True
-        }]
-        with open(config_path, "w") as file:
-            json.dump(config, file, indent=4)
+    print("Updating the config")
+    pool = choose()
+    wallet_address=input("Enter your Monero Wallet address: ")
+    print()
+    config = {}
+    config["pools"] = [{
+    "url": pool,
+    "user": wallet_address,
+    "tls": True
+    }]
+    with open(config_path, "w") as file:
+        json.dump(config, file, indent=4)
 
 def ask_c():
     answer = input("Continue? (y/n): ").strip().lower()
@@ -62,7 +61,7 @@ def choose():
         print("After installation, you can still change your pool in config.json file.")
         pool = "monerohash.com:9999"
     elif answer == ("5"):
-        print ("Using herominers's (Central European server)")
+        print ("Using herominers (Central European server)")
         print("After installation, you can still change your pool in config.json file.")
         pool = "monero.herominers.com:10191" 
     elif answer == ("6"):
@@ -122,7 +121,7 @@ elif update in "2":
     if os.path.exists(xmrig):
         config()
         sys.exit(0)
-    else:
+    if not os.path.exists(xmrig):
         print ("XMRig directory doesn't exist. Please, install it")
         sys.exit(0)
 else:

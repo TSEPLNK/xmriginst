@@ -55,10 +55,10 @@ def choose():
         print("After installation, you can still change your pool in config.json file.")
         pool = "monerohash.com:9999"
     elif answer == "5":
-        print("Using herominers's (Central European server)")
+        print("Using herominers (Central European server)")
         print("After installation, you can still change your pool in config.json file.")
         pool = "monero.herominers.com:10191" 
-    elif answer == "6":                                                                                                                                              
+    elif answer == "6":
         pool = input("Enter your own pool (include the port): ")
         print("After installation, you can still change your pool in config.json file.")   
     elif answer == "7":
@@ -110,10 +110,10 @@ update = input("1. Install XMRig; 2. Update already existing config (~/xmrig/bui
 if update in "1" or "":
     pass
 elif update in "2":
-    if os.path.exists(build):
+    if os.path.exists(xmrig):
         config()
         sys.exit(0)
-    else:
+    if not os.path.exists(xmrig):
         print("XMRig directory doesn't exist. Please, install it.")
         sys.exit(0)
 else:
