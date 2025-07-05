@@ -8,6 +8,12 @@ import subprocess
 import sys
 import platform
 
+usr = os.path.expanduser("~")
+xmrig = os.path.expanduser("xmrig")
+build = os.path.expanduser("build")
+config_path = os.path.expanduser("~/xmrig/build/config.json")
+
+
 def threetwoone():
         for i in range(3, 0, -1):
                 sys.stdout.write(f"\r{i}... ")
@@ -22,7 +28,6 @@ def ask_c():
         sys.exit(0)
 
 def config():
-    config_path = os.path.expanduser("~/xmrig/build/config.json")
     print("Updating the config")
     pool = choose()
     wallet_address=input("Enter your Monero Wallet address: ")
@@ -104,20 +109,23 @@ xmrig = os.path.expanduser("xmrig")
 build = os.path.expanduser("build")
 config_path = os.path.expanduser("~/xmrig/build/config.json")
 
+print ("WARNING! This script will execute git, cmake, dnf/apt/pacman!")
+ask_c()
+
 threetwoone()
 
 update = input("1. Install XMRig; 2. Update already existing config (~/xmrig/build): ")
-if update in "1" or "":
+if update in "1":
     pass
 elif update in "2":
     if os.path.exists(xmrig):
         config()
         sys.exit(0)
     if not os.path.exists(xmrig):
-        print("XMRig directory doesn't exist. Please, install it.")
+        print("XMRig directory doesn't exist.")
         sys.exit(0)
 else:
-    print("Choose existing variant.")
+    print("Choose an existing variant.")
     sys.exit(0)
 
 print(f"Current directory:", os.getcwd())
@@ -150,7 +158,7 @@ config()
 subprocess.call (["cmake", ".."])
 subprocess.call(["make", f"-j{os.cpu_count()}"])
 
-print("\033[44mSuccesfully installed XMRig! Now, type 'cd ~/xmrig/build', and then 'sudo ./xmrig'!\033[0m")
-print("Closing program.")
+print("\033[44mSuccesfully installed XMRig! Now, type 'cd ~/xmrig/build', and then either './xmrig'!\033[0m', or 'sudo ./xmrig' for better performance!")
+print("Closing the program.")
 
 threetwoone()

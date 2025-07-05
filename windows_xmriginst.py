@@ -22,7 +22,6 @@ def threetwoone():
         print()
 
 def config():
-    config_path = os.path.expanduser("~/xmrig/config.json")
     print("Updating the config")
     pool = choose()
     wallet_address=input("Enter your Monero Wallet address: ")
@@ -107,15 +106,10 @@ def dxmrig():
 
     print(f"XMRig Succesully downloaded in {xmrig_path}")
 
-
-usr = os.path.expanduser("~")
-xmrig = os.path.join(usr, "xmrig")
-config_path = os.path.join(xmrig, "config.json")
-
 threetwoone()
 
 update = input("1. Install XMRig; 2. Update already existing config (YourUsername/xmrig/): ")
-if update in "1" or "":
+if update in "1":
     pass
 elif update in "2":
     if os.path.exists(xmrig):
@@ -125,7 +119,7 @@ elif update in "2":
         print ("XMRig directory doesn't exist. Please, install it")
         sys.exit(0)
 else:
-    print ("Please, choose existing variant.")
+    print ("Please, choose an existing variant.")
     sys.exit(0)
 
 os.chdir(usr)
@@ -135,7 +129,7 @@ ask_c()
 if not os.path.exists(xmrig):
     dxmrig()
 else:
-    print("XMRig directory already exists. Please, delete it.")
+    print("XMRig directory already exists.")
     sys.exit(0)
 threetwoone()
 os.chdir(xmrig)
