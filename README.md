@@ -6,7 +6,7 @@ Linux version
 
 Firstly, open the script by executing "./linux_xmriginst",
 
-If you already have a XMRig installed in "~/xmrig/build", you can change the config by choosing the second variant.
+If you already have XMRig installed in "~/xmrig/build", you can change the config by choosing the second variant.
 
 If you want to install XMRig, choose the first variant,
 
@@ -27,7 +27,7 @@ Windows version
 
 Open the script by double clicking on "windows_xmriginst.exe",
 
-If you already have a XMRig installed in "YourUsername/xmrig/", you can change the config by choosing the second variant.
+If you already have XMRig installed in "YourUsername/xmrig/", you can change the config by choosing the second variant.
 
 If you want to install XMRig, choose the first variant,
 
