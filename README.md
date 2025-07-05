@@ -1,4 +1,3 @@
-Some parts were created w/ chatgpt (im kinda a newbie in python).
 So if you know how to simplify it, feel free to do so!
 
 HOW TO USE
@@ -21,7 +20,7 @@ Choose your pool.
 
 It's compiling XMRig, and here you go! 
 
-After everything is set up, execute 'cd ~/xmrig/build' and then 'sudo ./xmrig'.
+After everything is set up, execute 'cd ~/xmrig/build' and then either './xmrig' or 'sudo ./xmrig' for better performance!.
 
 --------------------------------
 Windows version
