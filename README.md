@@ -1,4 +1,4 @@
-So if you know how to simplify it, feel free to do so!
+If you know how to simplify it, feel free to do so!
 
 HOW TO USE
 --------------------------------
