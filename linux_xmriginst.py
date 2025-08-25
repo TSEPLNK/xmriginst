@@ -1,4 +1,4 @@
-#Simple script to install and mine monero thru XMRig on Linux. Some parts of the code were created by chatgpt
+#Simple script to install and mine monero thru XMRig on Linux.
 
 import time
 import json
@@ -104,11 +104,6 @@ def depencies():
     else:
         print("Skipping installing depencies, user input")
 
-usr = os.path.expanduser("~")
-xmrig = os.path.expanduser("xmrig")
-build = os.path.expanduser("build")
-config_path = os.path.expanduser("~/xmrig/build/config.json")
-
 print ("WARNING! This script will execute git, cmake, dnf/apt/pacman!")
 ask_c()
 
@@ -140,7 +135,7 @@ if not os.path.exists(xmrig):
     print("Cloning XMRig repository...")
     subprocess.call(["git", "clone", "https://github.com/xmrig/xmrig.git"])
 else:
-    print("\033[31mXMRig directory already exists. Please, delete it.\033[0m")
+    print("\033[31mXMRig directory already exists.\033[0m")
     sys.exit(0)
 
 threetwoone()
