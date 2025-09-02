@@ -1,4 +1,4 @@
-#Simple script to install and mine monero thru XMRig on Linux.
+#Simple script to install and mine monero with XMRig on Linux.
 
 import time
 import json
@@ -49,23 +49,23 @@ def choose():
         pool = "pool.supportxmr.com:443"
     elif answer == "2":
         print("Using xmrpool.eu")
-        print("After installation, you can still change your pool in config.json file.")
+        print("After installation, you can still change your pool in the config.json file.")
         pool = "xmrpool.eu:9999"
     elif answer == "3":
         print("Using xmrfast")
-        print("After installation, you can still change your pool in config.json file.")
+        print("After installation, you can still change your pool in the config.json file.")
         pool = "pool.xmrfast.com:9000" 
     elif answer == "4":
         print("Using monerohash")
-        print("After installation, you can still change your pool in config.json file.")
+        print("After installation, you can still change your pool in the config.json file.")
         pool = "monerohash.com:9999"
     elif answer == "5":
         print("Using herominers (Central European server)")
-        print("After installation, you can still change your pool in config.json file.")
+        print("After installation, you can still change your pool in the config.json file.")
         pool = "monero.herominers.com:10191" 
     elif answer == "6":
         pool = input("Enter your own pool (include the port): ")
-        print("After installation, you can still change your pool in config.json file.")   
+        print("After installation, you can still change your pool in the config.json file.")   
     elif answer == "7":
         print ("Glory to Ukraine!")
         pool = ("Glory to Heroes!")
@@ -91,7 +91,7 @@ def distro():
         print ("Installing depencies for RPM- based distro")
         print ("Please, type your root passsword if it's needed. If you don't want to continue, press Ctrl + C")
         subprocess.call(["sudo", "dnf", "update"])
-        subprocess.call(["sudo", "dnf", "install", "-y", "git"," make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--skip-unavailable"])
+        subprocess.call(["sudo", "dnf", "install", "-y", "git","make", "cmake", "gcc", "gcc-c++", "libstdc++-static", "libuv-static", "hwloc-devel", "openssl-devel", "--skip-unavailable"])
     else:
         print ("'\033[31mPlease choose existing variant.\033[0m")
         sys.exit(0)
