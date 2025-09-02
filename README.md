@@ -41,3 +41,8 @@ After everything is set up, open 'C:/Users/YourUserName/xmrig/xmrig.exe'
 
 Please, leave me a star on a GitHub repo.
 ----
+
+
+
+
+Keep in mind that `xmriginst.py` is now abandoned: use `linux_xmriginst.py` and `windows_xmriginst.py` instead!
